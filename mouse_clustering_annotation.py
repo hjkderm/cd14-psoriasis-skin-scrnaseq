@@ -380,9 +380,11 @@ for key in ['X_pca', 'X_umap', 'X_scVI']:
 
 merged.write('data/cd14_merged.h5ad')
 
+## Figure 2E. UMAP of annotated cell types and Cd14 expression
 sc.pl.umap(merged, color='annot', legend_loc='on data', frameon=False, legend_fontsize=9)
 sc.pl.umap(merged, color='Cd14')
 
+## Figure 2F. Marker gene dotplot by annotated cell type
 # ---- Final annotated dotplot (ordered by broad cell-type grouping) ----
 final_marker_genes = {
     "DC": ['H2-Aa', 'H2-Ab1', 'Itgax'],
