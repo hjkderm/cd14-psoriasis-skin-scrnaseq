@@ -1,0 +1,40 @@
+# Core analysis packages
+# Versions below were recorded in the original notebook outputs (last run 2024-12-26).
+scanpy==1.10.2
+scvi-tools==1.1.6.post2
+
+# Required by specific steps in the scripts
+# ---------------------------------------------------------------
+scikit-misc          # required by sc.pp.highly_variable_genes(flavor='seurat_v3')
+scikit-image         # required by sc.pp.scrublet / sce.pp.scrublet
+leidenalg            # required by sc.tl.leiden
+igraph               # graph backend for leidenalg
+harmonypy            # required by sce.pp.harmony_integrate (script 03)
+torch                # scVI backend; install the CUDA build matching your GPU
+adjustText           # non-overlapping cluster labels on UMAP (script 01)
+
+# Scientific stack (pulled in by scanpy, listed for clarity)
+# ---------------------------------------------------------------
+anndata
+numpy
+pandas
+scipy
+scikit-learn
+matplotlib
+seaborn
+tqdm
+
+# ---------------------------------------------------------------
+# NOTE ON PINNING
+# Only scanpy and scvi-tools are pinned above, because those are the two versions
+# that were actually recorded at run time. To pin the rest to the versions in your
+# own environment, activate that environment and run:
+#
+#     python -c "import session_info; session_info.show(dependencies=True)"
+#
+# or, for an exact snapshot of everything installed:
+#
+#     pip freeze > requirements-frozen.txt
+#
+# See the README for details.
+# ---------------------------------------------------------------
