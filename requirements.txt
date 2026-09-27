@@ -21,18 +21,3 @@ scikit-learn
 matplotlib
 seaborn
 tqdm
-
-# ---------------------------------------------------------------
-# NOTE ON PINNING
-# Only scanpy and scvi-tools are pinned above, because those are the two versions
-# that were actually recorded at run time. To pin the rest to the versions in your
-# own environment, activate that environment and run:
-#
-#     python -c "import session_info; session_info.show(dependencies=True)"
-#
-# or, for an exact snapshot of everything installed:
-#
-#     pip freeze > requirements-frozen.txt
-#
-# See the README for details.
-# ---------------------------------------------------------------
