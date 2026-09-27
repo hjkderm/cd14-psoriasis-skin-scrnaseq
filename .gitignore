@@ -1,0 +1,60 @@
+# ---------------------------------------------------------------
+# Data files — never commit these to the repository.
+# ---------------------------------------------------------------
+data/
+models/
+results/
+
+*.h5ad
+*.h5
+*.loom
+*.mtx
+*.mtx.gz
+*.rds
+*.RData
+barcodes.tsv*
+features.tsv*
+genes.tsv*
+
+# Sample metadata may contain identifiable information — commit only
+# after checking. Remove this line if your meta.csv is safe to share.
+meta.csv
+meta_*.csv
+
+# ---------------------------------------------------------------
+# Figures and large outputs
+# ---------------------------------------------------------------
+figures/
+*.pdf
+*.png
+*.svg
+*.tiff
+
+# ---------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.Python
+build/
+dist/
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+# ---------------------------------------------------------------
+# Editors and OS
+# ---------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
