@@ -76,7 +76,8 @@ data/
 ├── mouse_skin_for_cellchat.rds  # mouse: annotated object converted to Seurat, for CellChat
 ├── human_skin_merged_hvg.h5ad   # human: HVG subset carrying the scVI latent space
 ├── human_skin_annotated.h5ad    # human: full gene set with the lv0 annotation
-└── human_skin_myeloid.h5ad      # human: myeloid subset with the lv1 annotation
+├── human_skin_myeloid.h5ad      # human: myeloid subset with the lv1 annotation
+└── human_skin_myeloid_final.h5ad  # human: myeloid subset with the final lv1 annotation
 ```
 
 Paths in the scripts are relative placeholders (`data/`, `models/`, `results/`).
@@ -117,7 +118,7 @@ devtools::install_github("jinworks/CellChat")
 | scanpy | 1.10.2 |
 | scvi-tools | 1.1.6.post2 |
 | scib | 1.1.7 |
-| CellChat | 2.2.0 |
+| CellChat | 2.1.2 |
 | Seurat | 5.3.0 |
 
 See `requirements.txt` for the full Python dependency list.
@@ -130,10 +131,10 @@ See `requirements.txt` for the full Python dependency list.
 
 Six samples (three *Cd14*-KO, three WT) across three batches.
 
-- **QC**: per-sample doublet detection (Scrublet), then filtering on total counts
-  (>1,000), genes per cell (250–6,000) and mitochondrial fraction (<5%). Samples with
-  fewer than 1,000 cells after filtering are excluded. A stricter doublet-score cutoff
-  (≤0.1) is applied after merging.
+- **QC**: per-sample filtering that keeps cells with total counts >1,000, 250–6,000
+  genes, mitochondrial fraction <5% and a Scrublet doublet score <0.2 (Scrublet as
+  implemented in Scanpy). Samples with fewer than 1,000 cells after filtering are
+  excluded. A stricter doublet-score cutoff (≤0.1) is applied after merging.
 - **Integration**: scVI, with `sample` as batch key and `pct_counts_mt` as a continuous
   covariate. 2,000 HVGs (`seurat_v3`), with a curated marker panel added back manually
   so that lineage markers are not lost during HVG subsetting.
@@ -166,14 +167,15 @@ reported alongside.
 Publicly available human skin samples (378,424 cells after QC), listed in
 `data/meta.csv` via the `SerSam` column.
 
-- **QC**: per-sample Scrublet, filtering on total counts (>1,000), genes per cell
-  (500–5,000) and doublet score (<0.2); predicted doublets removed after merging.
+- **QC**: per-sample filtering that keeps cells with total counts >1,000, 500–5,000
+  genes and a Scrublet doublet score <0.2 (Scrublet as implemented in Scanpy); cells
+  classified as predicted doublets are removed after merging.
 - **Integration**: scVI, batch key `SerSam`, with `pct_counts_mt` and `pct_counts_ribo`
   as continuous covariates.
 - **Clustering**: Leiden at resolutions 0.02 / 0.1 / 0.2 / 0.5 / 1.0.
-- **Annotation (lv0)**: 13 broad compartments — keratinocytes, fibroblasts, T/NK,
+- **Annotation (lv0)**: 12 broad compartments — keratinocytes, fibroblasts, T/NK,
   myeloid, vascular and lymphatic endothelium, smooth muscle, melanocytes, B cells,
-  eccrine gland, mast cells and nerve. Low-quality clusters are labelled `OUT`.
+  eccrine gland, mast cells and nerve. Low-quality clusters labelled `OUT` are removed.
 
 ### Human myeloid subset — `human_myeloid_subclustering.py`
 
@@ -183,7 +185,7 @@ Publicly available human skin samples (378,424 cells after QC), listed in
 - **Clustering**: Leiden at resolutions 0.2 / 0.5 / 1.0 / 2.0 / 3.0; the annotation is
   hierarchical, with the coarse labels taken from resolution 0.2 and individual
   populations refined at higher resolutions.
-- **Annotation (lv1)**: cDC1, cDC2, mregDC, mregDC(FSCN1-negative), moDC, pDC,
+- **Annotation (lv1)**: cDC1, cDC2, mregDC, moDC, pDC,
   Langerhans cells, M1-like and M2-like macrophages, and neutrophils.
 
 ### Human batch-effect evaluation — `human_integration_batch_evaluation.py`
