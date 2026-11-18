@@ -171,7 +171,7 @@ fig.subplots_adjust(right=0.78, bottom=0.25)
 plt.show()
 
 # ============================================================
-# Part 3. CFLAR expression proportion
+# Part 3. FAS and CFLAR expression
 # ============================================================
 # Mean expression alone is vulnerable to dropout for sparsely detected genes,
 # so the fraction of cells with non-zero counts is reported alongside it.
@@ -204,7 +204,7 @@ for g in ['FAS', 'CFLAR']:
                       'expr': e})
     d = d[d['lv1'].isin(target_celltypes)]
     out = d.groupby(['Disease', 'lv1'], observed=True)['expr'].agg(
-        mean='mean', pct_expressing=lambda x: (x > 0).mean() * 100)
+        mean='mean', pct_expressing=lambda x: (x > 0).mean())
     print(f'=== {g} by disease ===')
     print(out.round(3))
 
