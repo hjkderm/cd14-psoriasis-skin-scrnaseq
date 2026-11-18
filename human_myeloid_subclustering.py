@@ -258,3 +258,8 @@ for key in uns_keys_to_drop:
         del myel_final.uns[key]
 
 myel_final.write('data/human_skin_myeloid_final.h5ad')
+
+# ---- Transfer the myeloid lv1 annotation back onto the whole-tissue object ----
+pso = sc.read('data/human_skin_annotated.h5ad')
+pso.obs['lv1'] = myel_final.obs['lv1'].reindex(pso.obs_names)
+pso.write('data/human_skin_annotated.h5ad')
