@@ -117,7 +117,7 @@ print(f"cLISI after  (scVI):           {clisi_after:.3f}")
 # Part 2. Myeloid subset — Harmony
 # ============================================================
 
-myel = sc.read('data/human_skin_myeloid.h5ad')
+myel = sc.read('data/human_skin_myeloid_final.h5ad')
 
 # ---- Keep Series colors consistent with the whole-tissue plots ----
 categories_pso = pso.obs[BATCH_KEY].cat.categories.tolist()
@@ -140,7 +140,7 @@ myel.obsm['X_umap_merge_only'] = myel.obsm['X_umap'].copy()
 # Restore the Harmony UMAP as the default embedding
 myel.obsm['X_umap'] = myel.obsm['X_umap_harmony'].copy()
 
-myel.write('data/human_skin_myeloid.h5ad')
+myel.write('data/human_skin_myeloid_final.h5ad')
 
 # ---- Check for overplotting: cell counts are very uneven across datasets ----
 series_counts = myel.obs.groupby(BATCH_KEY).size().sort_values(ascending=False)
