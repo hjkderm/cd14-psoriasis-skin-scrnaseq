@@ -394,4 +394,6 @@ merged.obs['lv0'] = merged_hvg.obs['lv0'].copy()
 for key in ['X_pca', 'X_umap', 'X_scVI']:
     merged.obsm[key] = merged_hvg.obsm[key].copy()
 
+merged = merged[merged.obs['lv0'] != 'OUT'].copy()
+
 merged.write('data/human_skin_annotated.h5ad')
