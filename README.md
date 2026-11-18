@@ -206,8 +206,9 @@ datasets do not visually dominate; all metrics use the full data.
   recalculated and compared against the full-cohort values.
 - **Per-dataset breakdown**: myeloid subtype composition per dataset, to check
   whether the overall composition is driven by any single dataset.
-- **CFLAR expression proportion**: fraction of CFLAR-expressing cells per myeloid
-  subtype, reported alongside mean expression because mean expression alone is
+- **FAS and CFLAR expression**: mean expression and fraction of expressing cells per
+  myeloid subtype, for all samples and separately for healthy and psoriasis samples.
+  The fraction is reported alongside the mean because mean expression alone is
   vulnerable to dropout for sparsely detected genes.
 
 ---
