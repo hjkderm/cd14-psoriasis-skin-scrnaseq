@@ -207,7 +207,7 @@ myel.obs['lv1_v401_nomt'] = np.where(
     myel.obs['leiden_res_2.0'] == '15', 'moDC', myel.obs['lv1_v401_nomt']
 )
 myel.obs['lv1_v401_nomt'] = np.where(
-    myel.obs['leiden_res_2.0'] == '17', 'mregDC_FSCN1neg', myel.obs['lv1_v401_nomt']
+    myel.obs['leiden_res_2.0'] == '17', 'mregDC', myel.obs['lv1_v401_nomt']
 )
 
 sc.pl.umap(myel, color='lv1_v401_nomt', ncols=1, size=5)
