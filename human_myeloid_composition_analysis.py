@@ -11,10 +11,11 @@ Part 2. Per-dataset composition breakdown
         Myeloid subtype composition per GEO dataset, to check whether the
         overall composition is driven by any single dataset.
 
-Part 3. CFLAR expression proportion
-        Fraction of CFLAR-expressing cells per myeloid subtype. Reported
-        alongside mean expression, because mean expression alone is vulnerable
-        to dropout for sparsely detected genes.
+Part 3. FAS and CFLAR expression
+        Mean expression and fraction of expressing cells per myeloid subtype,
+        for all samples and separately for healthy and psoriasis samples. The
+        fraction is reported alongside the mean, because mean expression alone
+        is vulnerable to dropout for sparsely detected genes.
 
 Note: Data paths below are relative placeholders (data/).
 Adjust them to match your own directory layout before running.
@@ -194,6 +195,18 @@ summary = pd.DataFrame({
     'mean_expr_all': df.groupby('lv1', observed=True)['expr'].mean().loc[target_celltypes],
 })
 print(summary)
+
+# ---- FAS and CFLAR by disease status (mean expression and % expressing cells) ----
+for g in ['FAS', 'CFLAR']:
+    e = pso[myeloid_mask, g].X.toarray().flatten()
+    d = pd.DataFrame({'lv1': pso.obs.loc[myeloid_mask, 'lv1'].values,
+                      'Disease': pso.obs.loc[myeloid_mask, 'Disease'].values,
+                      'expr': e})
+    d = d[d['lv1'].isin(target_celltypes)]
+    out = d.groupby(['Disease', 'lv1'], observed=True)['expr'].agg(
+        mean='mean', pct_expressing=lambda x: (x > 0).mean() * 100)
+    print(f'=== {g} by disease ===')
+    print(out.round(3))
 
 # ---- Dotplot of the core molecules across myeloid subtypes ----
 myeloid_sub = pso[myeloid_mask & pso.obs['lv1'].isin(target_celltypes)].copy()
